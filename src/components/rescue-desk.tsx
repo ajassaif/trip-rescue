@@ -69,7 +69,7 @@ export function RescueDesk() {
   return <>
     <a className="skip-link" href="#trip-form">Skip to trip details</a>
     <header className="site-header"><Link className="brand" href="/" aria-label="Trip Rescue home"><span className="brand-mark"><LifeBuoy size={24} strokeWidth={2}/></span><span>trip<span className="brand-light">rescue</span><span className="brand-period">.</span></span></Link>
-      <nav aria-label="Main navigation"><a className="nav-active" href="#trip-form">Recovery desk</a><button onClick={()=>openDialog("pattern")}>Decision pattern <ArrowUpRight size={12}/></button><button onClick={()=>openDialog("how")}>How it works</button></nav>
+      <nav aria-label="Main navigation"><a className="nav-active" href="#trip-form">Recovery desk</a><Link href="/evidence">Recorded AWS runs</Link><button onClick={()=>openDialog("pattern")}>Decision pattern <ArrowUpRight size={12}/></button><button onClick={()=>openDialog("how")}>How it works</button></nav>
       <button className="connection-pill" onClick={()=>openDialog("connection")}><span className={`status-dot ${healthError ? "status-error" : ""}`}/>{healthError ? "Service offline" : form.mode === "live" ? "Live models" : "Demo workspace"}<ChevronDown size={12}/></button>
     </header>
 

@@ -1,0 +1,114 @@
+{
+  "recorded_at_utc": "2026-10-18T13:14:30.638614+00:00",
+  "request": {
+    "mode": "live",
+    "scenario": "flight",
+    "origin": "Kochi",
+    "destination": "Bengaluru",
+    "budget": 5000,
+    "current_time": "18:15",
+    "arrive_by": "23:30",
+    "message": "I missed the last flight from Kochi to Bengaluru. I need somewhere to stay in Kochi tonight, within ₹5,000, while I sort out tomorrow's travel."
+  },
+  "result": {
+    "id": "4ae759ae-d3cb-4e89-9674-f27f784fb33a",
+    "mode": "live",
+    "status": "ready",
+    "summary": "Two fictional stays in Kochi are available: the Airport rest house and the Courtyard guest room, both include one night and local transfers, but onward travel to Bengaluru is not included.",
+    "question": null,
+    "selected_tool": "find_stay",
+    "decision": {
+      "choice": "find_stay",
+      "confidence": 0.9847,
+      "latency_ms": 2162.12,
+      "source": "Strands Decider live HTTP",
+      "model": "strands-decider-2B-qwen3.5-v1-2610",
+      "probabilities": {
+        "find_transport": 0.0068,
+        "find_stay": 0.9885,
+        "check_disruptions": 0.0018,
+        "clarify": 0.0028
+      }
+    },
+    "options": [
+      {
+        "id": "flight-stay-01",
+        "kind": "stay",
+        "title": "Airport rest house",
+        "subtitle": "Kochi · one fictional night + local transfer; not arrival in Bengaluru",
+        "departure": "18:45",
+        "arrival": "19:05",
+        "duration_minutes": 20,
+        "cost": 2400.0,
+        "tags": [
+          "Fictional fixture",
+          "Near airport",
+          "Transfer included"
+        ],
+        "steps": [
+          "Take the fictional 18:45 local transfer in Kochi.",
+          "Check in at 19:05; one night is included.",
+          "Onward travel to Bengaluru is not included or booked."
+        ]
+      },
+      {
+        "id": "flight-stay-02",
+        "kind": "stay",
+        "title": "Courtyard guest room",
+        "subtitle": "Kochi · one fictional night + local transfer; not arrival in Bengaluru",
+        "departure": "19:00",
+        "arrival": "19:35",
+        "duration_minutes": 35,
+        "cost": 1650.0,
+        "tags": [
+          "Fictional fixture",
+          "Guest room",
+          "Transfer included"
+        ],
+        "steps": [
+          "Take the fictional 19:00 local transfer in Kochi.",
+          "Check in at 19:35; one night is included.",
+          "Plan onward travel separately; nothing is booked."
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "stage": "input",
+        "title": "Read recovery request",
+        "detail": "All times use the same fictional day in IST. Budget is in INR.",
+        "duration_ms": null
+      },
+      {
+        "stage": "decision",
+        "title": "Strands Decider selected a tool",
+        "detail": "Validated typed choice: find_stay.",
+        "duration_ms": 2162.12
+      },
+      {
+        "stage": "gate",
+        "title": "Confidence gate passed",
+        "detail": "Confidence met 0.80. This heuristic is not an accuracy guarantee.",
+        "duration_ms": null
+      },
+      {
+        "stage": "tool",
+        "title": "Ran find_stay",
+        "detail": "Returned 2 fictional option(s) after route, fare and applicable same-day schedule filters. Advisories have no travel schedule.",
+        "duration_ms": 0.08
+      },
+      {
+        "stage": "explanation",
+        "title": "Bedrock explained the evidence",
+        "detail": "Model amazon.nova-micro-v1:0 received only filtered fictional inventory and trip constraints.",
+        "duration_ms": 377.81
+      }
+    ],
+    "provenance": {
+      "decision": "Strands Decider live HTTP",
+      "explanation": "Amazon Bedrock Converse live",
+      "inventory": "fictional fixtures"
+    },
+    "total_ms": 2540.24
+  }
+}

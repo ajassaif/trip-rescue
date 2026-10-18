@@ -1,29 +1,27 @@
 # Submission readiness
 
-## Present in this repository
+## Completed
 
-- Original Trip Rescue interface and bounded agent workflow.
-- Three fictional disruption scenarios with honest demo provenance.
-- Real Decider HTTP and Amazon Bedrock Converse integration paths.
-- Reusable typed tool-selection pattern and its agent wiring.
-- Constraint, abstention and provider-contract tests.
-- Private AWS deployment instructions, article draft and recording script.
-- Verified local Decider + AWS Bedrock runs for all three tools, with live UI screenshot and exported evidence.
+- Original recovery desk, bounded agent and reusable typed tool-selection recipe.
+- Actual Decider and agent on AWS EC2, paired with Bedrock Nova Micro, 18 October 2026.
+- Three successful tool paths and a real low-confidence abstention; requests, responses, model revisions and environment saved in [evidence/aws](evidence/aws/).
+- Public source repository: https://github.com/ajassaif/trip-rescue.
+- 63 backend tests, seven API smoke checks, lint, TypeScript and production build passed.
+- Clearly labeled `/evidence` page for inspecting recorded AWS responses without new cloud calls.
+- Prepared [Builder Center article](article.md).
+- Completed 2:28 captioned [demo video](demo/README.md), rendered from the saved AWS responses; public hosting verification follows the repository push.
 
-## Still required before claiming a qualifying submission
+## Still required
 
-- Run the actual Decider 2B checkpoint and Bedrock model successfully on AWS.
-- Capture AWS-hosted model identity, hardware, region and exported live evidence (hybrid local/cloud evidence already exists).
-- Evaluate ambiguous requests and uncertain cases with the actual models; all three preset tool choices have passed.
-- Publish this original source to a public repository with the reusable recipe clearly labeled.
-- Finalize and publish the Builder Center article with actual results and repository/video links.
-- Record and publicly host a demonstration under three minutes.
-- Apply `#strands-decider-2b` and `#tool-selection` and submit before the verified deadline.
+- Verify anonymous access to the demo video after pushing it to the public repository.
+- Publish the Builder Center article with repository/video links and `#strands-decider-2b` and `#tool-selection`.
+- Complete the event's project submission and verify its confirmation.
+- Verify termination/root-volume deletion and delete the remaining resources from the later temporary AWS stack. Its timer already shut the host down; authenticated AWS access is needed to finish verification.
 
-Real Bedrock cloud inference succeeded from the local agent on 17 October. The temporary EC2 stack was launched, then deleted on 18 October before agent/model installation or testing. No AWS-hosted agent run, public repository, article or video has been completed by this build. The project does not yet satisfy the agent-on-AWS submission gate. See [cleanup record](aws-cleanup.md).
+Public code and successful cloud inference do not by themselves establish a completed entry. No final submission confirmation has been observed.
 
-## Deadline note
+## Deadline
 
-Rechecked on 18 October 2026: the official event page specifies 23 October 2026 at 11:59 PM PDT, corresponding to 24 October at 12:29 PM IST. Required materials include a public repository with the reusable pattern, a Builder Center article and a public demonstration video under three minutes.
+The official event page, rechecked 19 October 2026, specifies 23 October 2026 at 11:59 PM PDT, or 24 October at 12:29 PM IST. It requires a public repository with a reusable pattern, a Builder Center article, and a public demonstration video under three minutes.
 
-[Event](https://builder.aws.com/build/hackathons/4f50957c-1d08-37ab-b11c-97516b9adeb4/agent-experience-hackathon) · [Rules](https://builder.aws.com/build/hackathons/4f50957c-1d08-37ab-b11c-97516b9adeb4/agent-experience-hackathon?tab=rules)
+[Event and requirements](https://builder.aws.com/build/hackathons/4f50957c-1d08-37ab-b11c-97516b9adeb4/agent-experience-hackathon-strands-decider)

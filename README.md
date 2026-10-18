@@ -4,7 +4,9 @@ An experimental travel recovery desk: tell it what changed, let a small decision
 
 Built for the AWS Agent Experience Hackathon. Pattern: **tool selection**. Submission tags: `#strands-decider-2b` and `#tool-selection`.
 
-**Current status:** all three scenarios passed with actual local Strands Decider inference and Amazon Bedrock Nova Micro in us-east-1. The UI, live JSON export and 63 backend tests were verified. A temporary EC2 stack was launched, then deleted on 18 October 2026 before the agent or Decider was installed/tested on it. AWS-hosted agent verification, a public repository, published article and recorded video remain. See [live evidence](docs/verification.md) and [cleanup record](docs/aws-cleanup.md).
+[Watch the 2:28 demo](https://raw.githubusercontent.com/ajassaif/trip-rescue/main/docs/demo/trip-rescue-demo.mp4) · [Video transcript](docs/demo/transcript.md) · [AWS evidence](docs/evidence/aws/) · [Reusable pattern](patterns/README.md)
+
+**Current status:** the actual agent and Strands Decider ran on AWS EC2 on 18 October 2026, paired with Bedrock Nova Micro. Three recovery tools succeeded and one uncertain request correctly paused at the confidence gate. Source and the reusable pattern are public. Inspect [original AWS responses and environment](docs/evidence/aws/), or open `/evidence` locally to replay them without making model calls. The temporary server shut down on its timer; final cloud-resource deletion verification and Builder Center publication remain pending. See the [submission checklist](docs/submission-checklist.md).
 
 ## Start locally
 
@@ -127,8 +129,8 @@ For the hackathon, the simplest private AWS deployment is a single EC2 host runn
 - `backend/app.py`: bounded agent workflow.
 - `backend/inventory.py`: fictional travel tools and constraints.
 - `patterns/tool_selection.py`: reusable Decider recipe.
-- `docs/article-draft.md`: draft Builder Center article.
+- `docs/article.md`: prepared Builder Center article with actual AWS observations.
 - `docs/demo-script.md`: recording outline under three minutes.
 - `docs/submission-checklist.md`: remaining submission work.
 
-This project is original local source. It has not been published or submitted by this build.
+The original project source is public at [ajassaif/trip-rescue](https://github.com/ajassaif/trip-rescue). Public source does not by itself establish a completed hackathon entry; publication and submission status are tracked in the checklist.

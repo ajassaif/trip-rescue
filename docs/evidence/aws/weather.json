@@ -1,0 +1,112 @@
+{
+  "recorded_at_utc": "2026-10-18T13:14:33.698730+00:00",
+  "request": {
+    "mode": "live",
+    "scenario": "weather",
+    "origin": "Munnar",
+    "destination": "Kochi",
+    "budget": 2500,
+    "current_time": "15:00",
+    "arrive_by": "22:00",
+    "message": "Heavy rain is disrupting my journey from Munnar to Kochi. Check the road disruption reports before we make a new plan. My budget is ₹2,500."
+  },
+  "result": {
+    "id": "f6d24dd7-c05f-4401-9d76-af9602de322c",
+    "mode": "live",
+    "status": "ready",
+    "summary": "Two fictional disruption reports caution about potential hill-road closures and advise verifying conditions with local updates and your operator. No safe route or arrival time is guaranteed.",
+    "question": null,
+    "selected_tool": "check_disruptions",
+    "decision": {
+      "choice": "check_disruptions",
+      "confidence": 0.9804,
+      "latency_ms": 2147.43,
+      "source": "Strands Decider live HTTP",
+      "model": "strands-decider-2B-qwen3.5-v1-2610",
+      "probabilities": {
+        "find_transport": 0.0069,
+        "find_stay": 0.0049,
+        "check_disruptions": 0.9853,
+        "clarify": 0.0028
+      }
+    },
+    "options": [
+      {
+        "id": "weather-advisory-01",
+        "kind": "advisory",
+        "title": "Hill-road disruption bulletin",
+        "subtitle": "Munnar → Kochi · fictional monsoon report",
+        "departure": null,
+        "arrival": null,
+        "duration_minutes": null,
+        "cost": null,
+        "tags": [
+          "Fictional fixture",
+          "Verify conditions"
+        ],
+        "steps": [
+          "The scenario assumes a closure on the hill-road segment after heavy rain.",
+          "This is not a current weather report or a road-safety assessment.",
+          "Check official local updates and your operator before departing."
+        ]
+      },
+      {
+        "id": "weather-advisory-02",
+        "kind": "advisory",
+        "title": "Recheck before rerouting",
+        "subtitle": "Munnar → Kochi · fictional recovery guidance",
+        "departure": null,
+        "arrival": null,
+        "duration_minutes": null,
+        "cost": null,
+        "tags": [
+          "Fictional fixture",
+          "No arrival guarantee"
+        ],
+        "steps": [
+          "Do not interpret an alternate route as verified safe.",
+          "Confirm any revised route and departure with the operator.",
+          "If travel is suspended, arrange a place to wait; this report does not include a stay or transfer."
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "stage": "input",
+        "title": "Read recovery request",
+        "detail": "All times use the same fictional day in IST. Budget is in INR.",
+        "duration_ms": null
+      },
+      {
+        "stage": "decision",
+        "title": "Strands Decider selected a tool",
+        "detail": "Validated typed choice: check_disruptions.",
+        "duration_ms": 2147.43
+      },
+      {
+        "stage": "gate",
+        "title": "Confidence gate passed",
+        "detail": "Confidence met 0.80. This heuristic is not an accuracy guarantee.",
+        "duration_ms": null
+      },
+      {
+        "stage": "tool",
+        "title": "Ran check_disruptions",
+        "detail": "Returned 2 fictional option(s) after route, fare and applicable same-day schedule filters. Advisories have no travel schedule.",
+        "duration_ms": 0.06
+      },
+      {
+        "stage": "explanation",
+        "title": "Bedrock explained the evidence",
+        "detail": "Model amazon.nova-micro-v1:0 received only filtered fictional inventory and trip constraints.",
+        "duration_ms": 368.75
+      }
+    ],
+    "provenance": {
+      "decision": "Strands Decider live HTTP",
+      "explanation": "Amazon Bedrock Converse live",
+      "inventory": "fictional fixtures"
+    },
+    "total_ms": 2516.45
+  }
+}

@@ -19,3 +19,7 @@ Raw console resource status and a screenshot are retained locally under ignored 
 All three scenarios passed using actual local CPU Strands Decider inference and AWS Bedrock Nova Micro. The EC2 infrastructure was created, but no SSH connection, source upload, model installation or AWS-hosted agent inference was completed before cleanup. Infrastructure creation alone does not establish that the agent ran on AWS. Travel data remains fictional.
 
 Before claiming a qualifying hackathon submission, complete AWS-hosted agent verification and publish the public repository, Builder Center article and video under three minutes. The source, deployment runbook, drafts and hybrid live evidence are preserved.
+
+## Later successful test — cleanup verification pending
+
+A later approved deployment on 18 October ran the actual models successfully. It is separate from the deleted attempts above. Its two-hour timer issued poweroff at 15:05 UTC on 18 October, closing the SSH session. The template specifies termination on instance shutdown and root-disk deletion, but those AWS states still need verification. The CloudFormation stack also needs deletion to remove the remaining IAM role/profile, security group and public key. AWS sign-in expired before that verification could be completed. No claim of account-wide cleanup or final billing reconciliation is made.

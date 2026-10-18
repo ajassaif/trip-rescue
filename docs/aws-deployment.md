@@ -1,6 +1,6 @@
 # Private AWS demo deployment
 
-Status as of 18 October 2026: actual Bedrock calls from the local agent in us-east-1 were verified. The [temporary CPU deployment](temporary-aws-test.md) created infrastructure, but Decider and the API were never installed/tested there. All its resources have now been deleted at the user's request; see [cleanup record](aws-cleanup.md). The full-stack SSM deployment below is an alternative that has not been executed.
+Status as of 19 October 2026: the [temporary CPU deployment](temporary-aws-test.md) successfully ran Decider and the agent on AWS on 18 October, paired with Bedrock through an instance role. See [original evidence](evidence/aws/). The timer shut the host down; final stack cleanup verification is pending. The full-stack SSM deployment below is an alternative that has not been executed.
 
 ## Deployment shape
 

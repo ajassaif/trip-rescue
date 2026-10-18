@@ -1,3 +1,7 @@
+# Model evidence
+
+[18 October AWS-hosted runs](aws/) include all four requests, responses and actual environment metadata. They supersede the hybrid-only status of the earlier examples below.
+
 # Live examples — 17 October 2026
 
 These are actual model responses using local CPU Strands Decider and Amazon Bedrock Nova Micro in us-east-1. All travel records are fictional fixtures. No travel booking or message was sent.

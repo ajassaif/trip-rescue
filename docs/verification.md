@@ -39,7 +39,7 @@ An independent source reviewer approved the local-demo scope after the numeric-v
 
 ## Not verified
 
-- AWS hosting of Decider and the agent API. A temporary EC2 stack was created, but the agent and model were not installed/tested there. The stack and all five resources were deleted on 18 October at the user's request; see [cleanup record](aws-cleanup.md). Bedrock inference from the local agent was verified on 17 October.
+- Final deletion verification for the later successful AWS test deployment. Its two-hour timer shut the host down; the remaining stack resources still require authenticated cleanup. See [cleanup record](aws-cleanup.md).
 - Docker images or runtime. Docker was stopped to release memory. Compose configuration validation alone does not establish container execution success.
 - Real travel availability, route safety, fares or weather. There is no live travel-data provider.
 - A live-model quality, calibration, cost or latency comparison. The examples below are individual observations, not a benchmark or accuracy estimate.
@@ -61,3 +61,16 @@ All three responses contained live Decider and Bedrock provenance. All inventory
 The first live rail explanation incorrectly claimed no options fit despite three filtered options. The explanation prompt now supplies a result-specific instruction, temperature is zero, and a narrow guard rejects that observed contradiction. A regression test covers it. This is not a general factuality guarantee; review generated explanations before acting on them.
 
 The separate pinned local-model download also completed. Its revision record describes those downloaded files, not proof that the reused service loaded exactly the same cached revision. No second local model process was started.
+
+## Actual AWS-hosted agent runs — 18 October 2026
+
+The FastAPI agent and actual Decider checkpoint ran together on EC2 c7i.2xlarge in us-east-1 (8 vCPU, 16 GiB RAM, Ubuntu 24.04, CPU). Bedrock Nova Micro used the model-scoped instance role. The local UI reached the agent through SSH. [Original requests, responses and environment](evidence/aws/) preserve UTC timestamps and provenance.
+
+| Request | Model candidate | Confidence | HTTP time | Outcome |
+| --- | --- | --- | --- | --- |
+| Train | find_transport | 0.9809 | 2294.96 ms | Three options + Bedrock |
+| Flight | find_stay | 0.9847 | 2162.12 ms | Two stays + Bedrock |
+| Weather | check_disruptions | 0.9804 | 2147.43 ms | Two reports + Bedrock |
+| Ambiguous | find_transport | 0.5905 | 2156.77 ms | Gate selected clarify; no tool or Bedrock call |
+
+The ambiguous result is an application abstention, not a model choice of clarify. These observations are not a quality or performance benchmark. All inventory is fictional. The subsequent `/evidence` UI renders saved responses and makes no new provider calls. Lint, TypeScript and production build passed after that page was added.

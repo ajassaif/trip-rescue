@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-10-18T13:16:01.734374+00:00",
+  "deployment": "AWS EC2 c7i.2xlarge, us-east-1; local UI over SSH tunnel",
+  "operating_system": "Ubuntu 24.04.5 LTS",
+  "python": "3.12.3",
+  "logical_cpus": 8,
+  "memory_bytes": 16462831616,
+  "bedrock_model": "amazon.nova-micro-v1:0",
+  "bedrock_credentials": "EC2 instance role restricted to regional Nova Micro InvokeModel",
+  "decider_health": {
+    "status": "ok",
+    "model": "strands-decider-2B-qwen3.5-v1-2610",
+    "checkpoint": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+    "base_model": "Qwen/Qwen3.5-2B-Base",
+    "num_slots": 24,
+    "max_length": 4096,
+    "temperature": 1.0545210242263665,
+    "device": "cpu",
+    "prefix_cache": true,
+    "vision": false
+  },
+  "packages": {
+    "strands-decider": "0.0.1.dev29+g930e6d5de",
+    "torch": "2.7.1+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2",
+    "huggingface-hub": "2.2.0"
+  },
+  "downloaded_model_revisions": {
+    "models--StrandsAgents--strands-decider-2B-qwen3.5-v1-2610": [
+      "216d1ccb46a9e9b036eb9187b248db98480f77d4"
+    ],
+    "models--Qwen--Qwen3.5-2B-Base": [
+      "b1485b2fa6dfa1287294f269f5fb618e03d52d7c"
+    ]
+  },
+  "limitations": "Four live examples are not a benchmark or accuracy estimate. Travel inventory is fictional."
+}

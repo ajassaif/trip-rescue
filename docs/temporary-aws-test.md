@@ -1,6 +1,8 @@
-# Temporary AWS live test — infrastructure deleted, cloud agent unverified
+# Temporary AWS live test — real inference verified
 
-Updated 18 October 2026: the user approved launch and cleanup. The first deployment rolled back because the security-group description contained an unsupported apostrophe. That failed stack was deleted; the corrected template successfully created the five resources below. Before SSH, source upload or model installation, the user requested cleanup. CloudFormation now confirms `DELETE_COMPLETE` for both stack attempts and all five resources of the successful attempt. EC2/EBS inventory confirms no Trip Rescue instance or root volume remains. See [cleanup evidence and scope](aws-cleanup.md). No AWS-hosted agent inference was performed. The commands below remain a runbook, not evidence that their steps were executed. The local AWS CLI installer was blocked by automatic approval review; actual deployment and cleanup used the authenticated AWS console/CloudShell.
+Updated 19 October 2026: the first two deployment attempts were deleted and verified before model installation. A later approved deployment on 18 October successfully installed and ran the actual Decider and FastAPI agent, using Bedrock Nova Micro through the instance role. Four requests were captured: three successful recovery tools and one low-confidence abstention. See [original evidence](evidence/aws/). Its two-hour timer shut the host down at 15:05 UTC on 18 October; final termination, root-volume deletion and remaining stack cleanup still require authenticated AWS verification. Do not interpret the earlier cleanup as covering this later deployment.
+
+The setup below was exercised for that successful run. Local AWS CLI installation was blocked by automatic approval review, so deployment used authenticated AWS CloudShell. SSH authentication used EC2 Instance Connect with a 60-second temporary public key; the private key remained local.
 
 ## Concrete scope and expected cost
 
@@ -30,7 +32,7 @@ Boot first installs an absolute, persistent systemd expiry timer for two hours l
 
 ## Inputs and launch, only after approval
 
-Required inputs: current operator public IPv4 `/32`, existing SSH **public** key, existing VPC ID and existing public subnet ID in the same VPC. Do not substitute a broad CIDR. Read-only account checks confirmed an active internet-gateway route, a public candidate subnet in `us-east-1a`, c7i.2xlarge offered in that zone, and a 32-vCPU standard On-Demand quota. The Canonical AMI parameter resolved successfully. Capacity at launch remains subject to availability. Nova Micro invocation succeeded using the local application's temporary key; the proposed instance role still needs its own live test.
+Required inputs: current operator public IPv4 `/32`, existing SSH **public** key, existing VPC ID and existing public subnet ID in the same VPC. Do not substitute a broad CIDR. Read-only account checks confirmed an active internet-gateway route, a public candidate subnet in `us-east-1a`, c7i.2xlarge offered in that zone, and a 32-vCPU standard On-Demand quota. The Canonical AMI parameter resolved successfully. Capacity at launch remains subject to availability. Nova Micro invocation succeeded using the local application's temporary key; the instance role successfully invoked Nova Micro during the 18 October test.
 
 CloudFormation's initial change-set validation rejected `Throughput` under an EC2 instance's EBS block mapping. The template now omits that unsupported property and uses the gp3 baseline throughput. The corrected `reviewed-test-v2` change set passed and lists exactly the five proposed resources. An unexecuted change set does not create its proposed EC2/IAM resources.
 

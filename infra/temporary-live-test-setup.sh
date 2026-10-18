@@ -1,5 +1,5 @@
 #!/bin/bash
-# PREPARED ONLY. Run manually after the separate EC2/IAM launch approval.
+# Executed successfully on the approved temporary AWS host on 18 October 2026.
 # Run as ubuntu from ~/trip-rescue. No credentials or keys belong in this file.
 set -euo pipefail
 cd /home/ubuntu/trip-rescue

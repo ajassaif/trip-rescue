@@ -1,0 +1,55 @@
+1
+00:00:00,000 --> 00:00:11,370
+A cancelled train, a missed flight, or heavy rain can leave a traveler unsure what to do next. Trip Rescue gives that next decision to a small model.
+
+2
+00:00:11,370 --> 00:00:22,370
+This is an edited walkthrough of saved responses from real AWS runs on October eighteenth. All travel inventory is fictional. No new inference happens in this video.
+
+3
+00:00:22,370 --> 00:00:33,370
+The agent and Strands Decider ran on an eight CPU, sixteen gigabyte EC2 instance. Amazon Bedrock Nova Micro supplied the explanations through a model restricted instance role.
+
+4
+00:00:33,370 --> 00:00:43,259
+Decider chooses one typed tool. A validator and confidence gate run before execution. Deterministic code filters the tool evidence, then Bedrock explains that evidence.
+
+5
+00:00:43,259 --> 00:00:54,259
+The traveler is in Varkala, with three thousand rupees and a nine p.m. arrival deadline. Decider chose find transport, with confidence zero point nine eight zero nine.
+
+6
+00:00:54,259 --> 00:01:07,481
+The tool returned three fictional options after route, fare and schedule filtering. Nova Micro explained those options. This two point three second figure is the recorded Decider HTTP time, not an animation timer.
+
+7
+00:01:07,481 --> 00:01:17,000
+Now the traveler missed the last flight and needs somewhere tonight. Decider selected find stay, with confidence zero point nine eight four seven.
+
+8
+00:01:17,000 --> 00:01:26,889
+The agent returned two fictional stays in Kochi. Those rooms do not promise arrival in Bengaluru. The chosen tool changes the evidence Bedrock receives.
+
+9
+00:01:26,889 --> 00:01:35,667
+For heavy rain on the Munnar to Kochi route, Decider chose check disruptions, with confidence zero point nine eight zero four.
+
+10
+00:01:35,667 --> 00:01:43,667
+The agent returned two fictional reports. It does not establish real road safety, availability, or an arrival guarantee.
+
+11
+00:01:43,667 --> 00:01:54,296
+Here the traveler says their plans changed but their immediate need is unclear. The model proposed find transport, with confidence zero point five nine zero five.
+
+12
+00:01:54,296 --> 00:02:04,185
+That is below the experimental zero point eight threshold. The application selected clarify and asked a question. No recovery tool or Bedrock call ran.
+
+13
+00:02:04,185 --> 00:02:15,185
+The public repository includes the typed question, tool choices, validator, original requests and responses, and model environment. The recorded results page lets you inspect each saved run.
+
+14
+00:02:15,185 --> 00:02:28,037
+Four examples are not an accuracy or performance benchmark. Reuse the pattern, evaluate the threshold on your own tasks, and keep uncertainty visible. Trip Rescue: a useful next decision, grounded in evidence.

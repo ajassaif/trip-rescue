@@ -1,0 +1,61 @@
+{
+  "recorded_at_utc": "2026-10-18T13:14:36.732344+00:00",
+  "request": {
+    "mode": "live",
+    "scenario": "rail",
+    "origin": "Varkala",
+    "destination": "Kochi",
+    "budget": 3000,
+    "current_time": "14:30",
+    "arrive_by": "21:00",
+    "message": "My travel plans changed and I am unsure what I need next. Help me decide."
+  },
+  "result": {
+    "id": "2f5dd187-31d6-48dc-af12-59d50aa2da50",
+    "mode": "live",
+    "status": "clarify",
+    "summary": "Please clarify your immediate recovery need before I continue.",
+    "question": "Do you need onward transport, a place to stay tonight, or a disruption report?",
+    "selected_tool": "clarify",
+    "decision": {
+      "choice": "find_transport",
+      "confidence": 0.5905,
+      "latency_ms": 2156.77,
+      "source": "Strands Decider live HTTP",
+      "model": "strands-decider-2B-qwen3.5-v1-2610",
+      "probabilities": {
+        "find_transport": 0.6929,
+        "find_stay": 0.0991,
+        "check_disruptions": 0.0223,
+        "clarify": 0.1858
+      }
+    },
+    "options": [],
+    "trace": [
+      {
+        "stage": "input",
+        "title": "Read recovery request",
+        "detail": "All times use the same fictional day in IST. Budget is in INR.",
+        "duration_ms": null
+      },
+      {
+        "stage": "decision",
+        "title": "Strands Decider selected a tool",
+        "detail": "Validated typed choice: find_transport.",
+        "duration_ms": 2156.77
+      },
+      {
+        "stage": "gate",
+        "title": "Ask before acting",
+        "detail": "Choice was clarify or confidence was below the configured 0.80 threshold. No tool ran.",
+        "duration_ms": null
+      }
+    ],
+    "provenance": {
+      "decision": "Strands Decider live HTTP",
+      "explanation": "confidence gate template",
+      "inventory": "fictional fixtures"
+    },
+    "total_ms": 2156.92
+  }
+}
