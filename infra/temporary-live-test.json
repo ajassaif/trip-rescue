@@ -1,0 +1,120 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "APPROVAL REQUIRED: temporary Trip Rescue CPU live test in us-east-1. One c7i.2xlarge, encrypted 30GB gp3, SSH /32 only, Nova Micro-only instance role, OS expiry after two hours. Delete stack after test.",
+  "Parameters": {
+    "VpcId": {"Type": "AWS::EC2::VPC::Id", "Description": "Existing VPC in us-east-1. No VPC or NAT is created."},
+    "PublicSubnetId": {"Type": "AWS::EC2::Subnet::Id", "Description": "Existing public subnet in that VPC with a route to an internet gateway."},
+    "SshSourceCidr": {
+      "Type": "String",
+      "Description": "Operator's current public IPv4 followed by /32. No shared or world-open CIDR.",
+      "AllowedPattern": "^(?!0\\.0\\.0\\.0/32$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])/32$",
+      "ConstraintDescription": "Supply a single nonzero IPv4 address with /32."
+    },
+    "SshPublicKey": {
+      "Type": "String",
+      "Description": "Existing OpenSSH public key ONLY. Keep its private key on the laptop.",
+      "AllowedPattern": "^ssh-(ed25519|rsa) [A-Za-z0-9+/]+={0,3}( .*)?$",
+      "MinLength": 50,
+      "MaxLength": 4096
+    },
+    "LatestUbuntuAmi": {
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+      "Default": "/aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id",
+      "Description": "Canonical public Ubuntu 24.04 amd64 AMI parameter. Resolution reads an existing public SSM parameter."
+    }
+  },
+  "Resources": {
+    "ImportedSshKey": {
+      "Type": "AWS::EC2::KeyPair",
+      "Properties": {
+        "KeyName": {"Fn::Sub": "${AWS::StackName}-ssh"},
+        "PublicKeyMaterial": {"Ref": "SshPublicKey"},
+        "Tags": [{"Key": "Project", "Value": "TripRescueTemporaryTest"}]
+      }
+    },
+    "SshOnlySecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Temporary Trip Rescue: SSH from operator only; application ports are never public",
+        "VpcId": {"Ref": "VpcId"},
+        "SecurityGroupIngress": [{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": {"Ref": "SshSourceCidr"}, "Description": "Operator single public IPv4"}],
+        "SecurityGroupEgress": [{"IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "CidrIp": "0.0.0.0/0", "Description": "HTTPS packages, model downloads and regional Bedrock API"}],
+        "Tags": [{"Key": "Project", "Value": "TripRescueTemporaryTest"}]
+      }
+    },
+    "NovaMicroRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Principal": {"Service": "ec2.amazonaws.com"}, "Action": "sts:AssumeRole"}]},
+        "Policies": [{
+          "PolicyName": "InvokeOnlyRegionalNovaMicro",
+          "PolicyDocument": {"Version": "2012-10-17", "Statement": [{
+            "Effect": "Allow",
+            "Action": "bedrock:InvokeModel",
+            "Resource": {"Fn::Sub": "arn:${AWS::Partition}:bedrock:us-east-1::foundation-model/amazon.nova-micro-v1:0"},
+            "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+          }]}
+        }],
+        "Tags": [{"Key": "Project", "Value": "TripRescueTemporaryTest"}]
+      }
+    },
+    "NovaMicroInstanceProfile": {"Type": "AWS::IAM::InstanceProfile", "Properties": {"Roles": [{"Ref": "NovaMicroRole"}]}},
+    "TestHost": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": {"Ref": "LatestUbuntuAmi"},
+        "InstanceType": "c7i.2xlarge",
+        "IamInstanceProfile": {"Ref": "NovaMicroInstanceProfile"},
+        "KeyName": {"Ref": "ImportedSshKey"},
+        "InstanceInitiatedShutdownBehavior": "terminate",
+        "DisableApiTermination": false,
+        "Monitoring": false,
+        "MetadataOptions": {"HttpEndpoint": "enabled", "HttpTokens": "required", "HttpPutResponseHopLimit": 1, "InstanceMetadataTags": "disabled"},
+        "NetworkInterfaces": [{"DeviceIndex": "0", "AssociatePublicIpAddress": true, "DeleteOnTermination": true, "SubnetId": {"Ref": "PublicSubnetId"}, "GroupSet": [{"Ref": "SshOnlySecurityGroup"}]}],
+        "BlockDeviceMappings": [{"DeviceName": "/dev/sda1", "Ebs": {"VolumeSize": 30, "VolumeType": "gp3", "Iops": 3000, "Encrypted": true, "DeleteOnTermination": true}}],
+        "Tags": [{"Key": "Name", "Value": {"Fn::Sub": "${AWS::StackName}-two-hour-test"}}, {"Key": "Project", "Value": "TripRescueTemporaryTest"}],
+        "UserData": {"Fn::Base64": {"Fn::Join": ["\n", [
+          "#!/bin/bash",
+          "set -euo pipefail",
+          "# Arm expiry before package downloads. Persist an absolute deadline across reboots.",
+          "expiry_file=/var/lib/trip-rescue-expiry",
+          "if [ ! -s \"$expiry_file\" ]; then date -u -d '+2 hours' '+%Y-%m-%d %H:%M:%S UTC' > \"$expiry_file\"; fi",
+          "expiry=$(cat \"$expiry_file\")",
+          "cat > /etc/systemd/system/trip-rescue-expiry.service <<'SERVICE'",
+          "[Unit]",
+          "Description=Terminate temporary Trip Rescue host by OS poweroff",
+          "[Service]",
+          "Type=oneshot",
+          "ExecStart=/usr/bin/systemctl poweroff",
+          "SERVICE",
+          "cat > /etc/systemd/system/trip-rescue-expiry.timer <<TIMER",
+          "[Unit]",
+          "Description=Absolute two-hour expiry for temporary Trip Rescue host",
+          "[Timer]",
+          "OnCalendar=$expiry",
+          "Persistent=true",
+          "AccuracySec=1s",
+          "Unit=trip-rescue-expiry.service",
+          "[Install]",
+          "WantedBy=timers.target",
+          "TIMER",
+          "systemctl daemon-reload",
+          "systemctl enable --now trip-rescue-expiry.timer",
+          "# A package failure leaves the armed expiry in place.",
+          "# Ubuntu EC2 mirrors default to HTTP; use official HTTPS mirrors for the 443-only egress rule.",
+          "sed -i -e 's|http://[a-z0-9.-]*ec2.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' -e 's|http://security.ubuntu.com/ubuntu|https://security.ubuntu.com/ubuntu|g' /etc/apt/sources.list.d/ubuntu.sources",
+          "timeout 600 apt-get update && timeout 600 apt-get install -y python3-venv python3-pip git",
+          "echo 'Bootstrap ready. Upload backend, patterns and infra setup script via scp. Timer is already armed.'",
+          ""
+        ]]}}
+      }
+    }
+  },
+  "Outputs": {
+    "InstanceId": {"Value": {"Ref": "TestHost"}},
+    "PublicIpv4": {"Value": {"Fn::GetAtt": ["TestHost", "PublicIp"]}},
+    "InstanceRoleArn": {"Value": {"Fn::GetAtt": ["NovaMicroRole", "Arn"]}},
+    "SshUser": {"Value": "ubuntu"},
+    "ExpiryReminder": {"Value": "Verify trip-rescue-expiry.timer immediately after SSH. OS poweroff terminates EC2 and deletes its root disk. Delete this CloudFormation stack to remove remaining IAM, SG and imported public key."}
+  }
+}

@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.venv
+.decider-venv
+.env
+.env.*
+!.env.example
+.local
+.superpowers
+**/__pycache__
+**/.pytest_cache
+*.tsbuildinfo

@@ -1,0 +1,130 @@
+{
+  "request": {
+    "mode": "live",
+    "scenario": "rail",
+    "origin": "Varkala",
+    "destination": "Kochi",
+    "budget": 3000,
+    "current_time": "14:30",
+    "arrive_by": "21:00",
+    "message": "My train from Varkala to Kochi has been cancelled. I need to get there tonight, and I have ₹3,000 left. Can you find another way?"
+  },
+  "result": {
+    "id": "bed55bef-e84f-4eca-8580-c020c81c00c6",
+    "mode": "live",
+    "status": "ready",
+    "summary": "Compare the costs and arrival times of the three fictional transport options: Coastal express coach, Evening relief train, and Shared coastal cab. All options meet the route, budget, and timing filters.",
+    "question": null,
+    "selected_tool": "find_transport",
+    "decision": {
+      "choice": "find_transport",
+      "confidence": 0.9809,
+      "latency_ms": 24279.1,
+      "source": "Strands Decider live HTTP",
+      "model": "strands-decider-2B-qwen3.5-v1-2610",
+      "probabilities": {
+        "find_transport": 0.9857,
+        "find_stay": 0.004,
+        "check_disruptions": 0.0085,
+        "clarify": 0.0018
+      }
+    },
+    "options": [
+      {
+        "id": "rail-bus-01",
+        "kind": "bus",
+        "title": "Coastal express coach",
+        "subtitle": "Varkala → Kochi · illustrative direct service",
+        "departure": "15:10",
+        "arrival": "19:45",
+        "duration_minutes": 275,
+        "cost": 680,
+        "tags": [
+          "Fictional fixture",
+          "Direct"
+        ],
+        "steps": [
+          "Use the fictional Varkala coach stop.",
+          "Board the 15:10 coach.",
+          "Arrive at the fictional Kochi terminal at 19:45."
+        ]
+      },
+      {
+        "id": "rail-train-01",
+        "kind": "train",
+        "title": "Evening relief train",
+        "subtitle": "Varkala → Kochi · illustrative alternate train",
+        "departure": "16:20",
+        "arrival": "20:35",
+        "duration_minutes": 255,
+        "cost": 420,
+        "tags": [
+          "Fictional fixture",
+          "Alternate service"
+        ],
+        "steps": [
+          "Use the fictional alternate service, not the cancelled train.",
+          "Depart Varkala at 16:20.",
+          "Arrive in Kochi at 20:35."
+        ]
+      },
+      {
+        "id": "rail-taxi-01",
+        "kind": "taxi",
+        "title": "Shared coastal cab",
+        "subtitle": "Varkala → Kochi · illustrative shared fare",
+        "departure": "15:00",
+        "arrival": "19:10",
+        "duration_minutes": 250,
+        "cost": 2850,
+        "tags": [
+          "Fictional fixture",
+          "Shared ride"
+        ],
+        "steps": [
+          "Use the fictional shared-cab pickup point.",
+          "Leave at 15:00.",
+          "Arrive in Kochi at 19:10."
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "stage": "input",
+        "title": "Read recovery request",
+        "detail": "All times use the same fictional day in IST. Budget is in INR.",
+        "duration_ms": null
+      },
+      {
+        "stage": "decision",
+        "title": "Strands Decider selected a tool",
+        "detail": "Validated typed choice: find_transport.",
+        "duration_ms": 24279.1
+      },
+      {
+        "stage": "gate",
+        "title": "Confidence gate passed",
+        "detail": "Confidence met 0.80. This heuristic is not an accuracy guarantee.",
+        "duration_ms": null
+      },
+      {
+        "stage": "tool",
+        "title": "Ran find_transport",
+        "detail": "Returned 3 fictional option(s) after route, fare and applicable same-day schedule filters. Advisories have no travel schedule.",
+        "duration_ms": 0.24
+      },
+      {
+        "stage": "explanation",
+        "title": "Bedrock explained the evidence",
+        "detail": "Model amazon.nova-micro-v1:0 received only filtered fictional inventory and trip constraints.",
+        "duration_ms": 2044.41
+      }
+    ],
+    "provenance": {
+      "decision": "Strands Decider live HTTP",
+      "explanation": "Amazon Bedrock Converse live",
+      "inventory": "fictional fixtures"
+    },
+    "total_ms": 26325.3
+  }
+}

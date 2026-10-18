@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.env
+.env.local
+.env.*.local
+.venv/
+.decider-venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.tsbuildinfo
+.local/
+.superpowers/

@@ -1,0 +1,19 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    expose:
+      - "8100"
+    command: ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8100"]
+    restart: unless-stopped
+  web:
+    build: .
+    environment:
+      AGENT_API_URL: http://agent:8100
+    ports:
+      - "127.0.0.1:3100:3100"
+    depends_on:
+      - agent
+    restart: unless-stopped
