@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Trip Rescue: real Strands Decider and Amazon Bedrock results, a 2:28 demo, and a reusable tool-selection pattern.">
+  <title>Trip Rescue — AWS model demo</title>
+  <style>
+    :root{color-scheme:light;--ink:#173d36;--green:#386951;--paper:#f6f4ec;--line:#d2dbcf;--orange:#b44d29}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}a:hover{color:var(--orange)}button,a{touch-action:manipulation}:focus-visible{outline:3px solid var(--orange);outline-offset:5px}.skip{position:absolute;top:-80px;left:15px;background:white;padding:12px}.skip:focus{top:10px}
+    header,main,footer{width:min(1160px,calc(100% - 40px));margin:auto}header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:25px 0;border-bottom:1px solid var(--line)}.brand{font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--ink);text-decoration:none}nav{display:flex;gap:24px;font-size:14px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;color:var(--orange);font-size:12px;font-weight:750}.hero{padding:52px 0 30px;display:grid;grid-template-columns:1.3fr 1fr;gap:45px;align-items:end}h1{font-size:clamp(38px,5vw,65px);line-height:1.08;letter-spacing:-.045em;margin:16px 0 22px;max-width:650px}h1 span{color:var(--green)}h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin:12px 0 18px}p{margin:0 0 16px}.hero p{max-width:520px}.note{font-size:14px;padding:20px;border-left:3px solid var(--green);background:#e8eee4}.video{background:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 12px 35px #173d3612}video{display:block;width:100%;aspect-ratio:16/9}.under-video{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:12px 0 45px;font-size:13px}.replay{border-top:1px solid var(--line);padding:32px 0}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}button{border:1px solid #aabcb0;background:transparent;color:var(--ink);padding:12px 20px;border-radius:6px;font:600 14px system-ui;cursor:pointer}button[aria-pressed=true]{background:var(--ink);color:white}.results{display:grid;grid-template-columns:1.15fr 1fr;gap:20px}.panel{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:28px;min-width:0}.dark{background:var(--ink);color:white;border-color:var(--ink)}.dark .eyebrow{color:#b8d2b8}.dark a{color:#f6bb91}.quote{font-size:19px;font-weight:600;line-height:1.5}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}.metrics span{display:block;font-size:12px;color:#c3d3c6}.metrics strong{font-size:27px}.tool{font:600 24px/1.4 ui-monospace,monospace;overflow-wrap:anywhere}#options{padding-left:22px}#options li{margin:7px 0}#summary{border-top:1px solid var(--line);padding-top:16px;font-size:15px}#request-meta,#recorded{font-size:13px;color:#607165}#trace{font-size:14px;padding-left:20px}#trace li{margin:12px 0}.limits{margin-top:25px;font-size:14px;max-width:850px}footer{border-top:1px solid var(--line);padding:25px 0 38px;font-size:13px}.links{display:flex;gap:22px;flex-wrap:wrap;margin:25px 0}.error{color:#a12b24} @media(max-width:700px){header,main,footer{width:calc(100% - 30px)}.hero,.results{grid-template-columns:1fr}.hero{padding-top:30px;gap:8px}.panel{padding:22px}nav{gap:15px}.tabs button{flex:1 1 40%;padding:12px}.under-video{margin-bottom:28px}h2{font-size:26px}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to demo</a>
+  <header><a class="brand" href="./">triprescue.</a><nav aria-label="Main"><a href="#runs">AWS results</a><a href="https://github.com/ajassaif/trip-rescue">Source ↗</a></nav></header>
+  <main id="main">
+    <section class="hero" aria-labelledby="title">
+      <div><div class="eyebrow">Strands Decider 2B + Amazon Bedrock</div><h1>One next move.<br><span>A visible decision.</span></h1><p>A recovery desk for disrupted trips. A small model selects the next tool; the agent checks its evidence, and Bedrock explains the options.</p></div>
+      <div class="note"><strong>Actual AWS runs. Recorded for inspection.</strong><br>The agent and Decider ran on EC2 on 18 October 2026. This page replays saved responses without calling models. Travel inventory is fictional. No bookings are made.</div>
+    </section>
+    <section aria-label="Demo video"><div class="video"><video controls playsinline preload="metadata" poster="demo/poster.png" aria-label="Trip Rescue captioned demo, 2 minutes 28 seconds"><source src="demo/trip-rescue-demo.mp4" type="video/mp4"><p><a href="demo/trip-rescue-demo.mp4">Download the video</a></p></video></div><div class="under-video"><span>2:28 · Silent, captioned walkthrough of saved AWS results</span><span><a href="demo/transcript.md">Transcript</a> · <a href="demo/trip-rescue-demo.mp4" download>Download MP4</a></span></div></section>
+    <section id="runs" class="replay" aria-labelledby="runs-title">
+      <span class="eyebrow">Inspect the original evidence</span><h2 id="runs-title">Three tool choices. One pause.</h2><p>Choose a recorded request to see what Decider returned and what the agent did next.</p>
+      <div class="tabs" role="group" aria-label="Recorded scenarios"><button data-run="rail" aria-pressed="true">Cancelled train</button><button data-run="flight" aria-pressed="false">Missed flight</button><button data-run="weather" aria-pressed="false">Monsoon disruption</button><button data-run="ambiguous" aria-pressed="false">Uncertain next step</button></div>
+      <p id="status" role="status">Loading saved evidence…</p>
+      <div class="results" id="results" hidden>
+        <section class="panel" aria-label="Request and outcome"><div class="eyebrow">The traveler asked</div><p id="request" class="quote"></p><p id="request-meta"></p><h3 id="outcome"></h3><ul id="options"></ul><p id="summary"></p><p id="question"></p><p id="recorded"></p></section>
+        <section class="panel dark" aria-label="Recorded model decision"><div class="eyebrow">Decider's candidate</div><div id="choice" class="tool"></div><div class="metrics"><div><span>Confidence</span><strong id="confidence"></strong></div><div><span>Decider HTTP time</span><strong id="latency"></strong></div></div><p id="action"></p><ol id="trace"></ol><a id="json" href="evidence/aws/rail.json">Open original request + response JSON ↗</a></section>
+      </div>
+      <noscript><p>Enable JavaScript for the scenario selector, or read the <a href="https://github.com/ajassaif/trip-rescue/tree/main/docs/evidence/aws">original AWS evidence</a>.</p></noscript>
+      <p class="limits"><strong>What these examples establish:</strong> observed tool selection and abstention on four requests. They are not an accuracy, confidence-calibration or performance benchmark. The 0.80 gate is experimental. EC2 c7i.2xlarge · 8 vCPU · 16 GiB · us-east-1 · CPU Decider · Nova Micro through an instance role.</p>
+      <div class="links"><a href="https://github.com/ajassaif/trip-rescue/tree/main/patterns">Reuse the decision pattern ↗</a><a href="evidence/aws/environment.json">Environment and model revisions ↗</a><a href="https://github.com/ajassaif/trip-rescue">Run the full app locally ↗</a></div>
+    </section>
+  </main>
+  <footer>Trip Rescue · AWS Agent Experience Hackathon · Tool selection<br>Static evidence viewer. No live travel provider, booking service, or hosted inference endpoint.</footer>
+  <script>
+    const $=id=>document.getElementById(id);
+    let current=0;
+    async function showRun(name){
+      const revision=++current;
+      document.querySelectorAll('[data-run]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.run===name)));
+      $('status').textContent='Loading saved evidence…';$('results').hidden=true;
+      try{
+        const response=await fetch('evidence/aws/'+name+'.json');if(!response.ok)throw new Error('Request failed');
+        const run=await response.json();if(revision!==current)return;
+        const r=run.result,q=run.request,d=r.decision;
+        $('request').textContent=q.message;
+        $('request-meta').textContent=q.origin+' → '+q.destination+' · INR '+q.budget.toLocaleString('en-IN')+' · by '+q.arrive_by+' IST';
+        $('outcome').textContent=r.status==='clarify'?'Ask before acting':r.options.length+' fictional results';
+        $('options').replaceChildren(...r.options.map(o=>{const li=document.createElement('li');li.textContent=o.title;return li}));
+        $('summary').textContent=r.summary;$('question').textContent=r.question||'';
+        $('recorded').textContent='Recorded '+run.recorded_at_utc+' · '+r.provenance.explanation;
+        $('choice').textContent=d.choice;$('confidence').textContent=d.confidence.toFixed(4);$('latency').textContent=Math.round(d.latency_ms).toLocaleString()+' ms';
+        $('action').textContent='Application action: '+r.selected_tool;
+        $('trace').replaceChildren(...r.trace.map(s=>{const li=document.createElement('li');li.textContent=s.title+' — '+s.detail;return li}));
+        $('json').href='evidence/aws/'+name+'.json';$('results').hidden=false;
+        $('status').textContent='Showing saved '+name+' response. No model call was made.';
+      }catch(error){if(revision===current)$('status').textContent='Saved evidence could not load. Use the public repository link below.';}
+    }
+    document.querySelectorAll('[data-run]').forEach(b=>b.addEventListener('click',()=>showRun(b.dataset.run)));
+    showRun('rail');
+  </script>
+</body>
+</html>
