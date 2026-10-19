@@ -9,14 +9,14 @@
 - 63 backend tests, seven API smoke checks, lint, TypeScript and production build passed.
 - Clearly labeled `/evidence` page for inspecting recorded AWS responses without new cloud calls.
 - Prepared [Builder Center article](article.md).
-- Completed 2:28 captioned [demo video](demo/README.md), rendered from the saved AWS responses; public hosting verification follows the repository push.
+- Completed 2:28 captioned [demo video](demo/README.md), rendered from the saved AWS responses; anonymous access and browser playback metadata verified.
+
+- All five temporary AWS stack resources deleted; instance and root-volume removal verified.
 
 ## Still required
 
-- Verify anonymous access to the demo video after pushing it to the public repository.
 - Publish the Builder Center article with repository/video links and `#strands-decider-2b` and `#tool-selection`.
 - Complete the event's project submission and verify its confirmation.
-- Verify termination/root-volume deletion and delete the remaining resources from the later temporary AWS stack. Its timer already shut the host down; authenticated AWS access is needed to finish verification.
 
 Public code and successful cloud inference do not by themselves establish a completed entry. No final submission confirmation has been observed.
 

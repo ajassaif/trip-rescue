@@ -4,9 +4,9 @@ An experimental travel recovery desk: tell it what changed, let a small decision
 
 Built for the AWS Agent Experience Hackathon. Pattern: **tool selection**. Submission tags: `#strands-decider-2b` and `#tool-selection`.
 
-[Watch the 2:28 demo](https://raw.githubusercontent.com/ajassaif/trip-rescue/main/docs/demo/trip-rescue-demo.mp4) · [Video transcript](docs/demo/transcript.md) · [AWS evidence](docs/evidence/aws/) · [Reusable pattern](patterns/README.md)
+[Watch the 2:28 demo](https://ajassaif.github.io/trip-rescue/) · [Video transcript](docs/demo/transcript.md) · [AWS evidence](docs/evidence/aws/) · [Reusable pattern](patterns/README.md)
 
-**Current status:** the actual agent and Strands Decider ran on AWS EC2 on 18 October 2026, paired with Bedrock Nova Micro. Three recovery tools succeeded and one uncertain request correctly paused at the confidence gate. Source and the reusable pattern are public. Inspect [original AWS responses and environment](docs/evidence/aws/), or open `/evidence` locally to replay them without making model calls. The temporary server shut down on its timer; final cloud-resource deletion verification and Builder Center publication remain pending. See the [submission checklist](docs/submission-checklist.md).
+**Current status:** the actual agent and Strands Decider ran on AWS EC2 on 18 October 2026, paired with Bedrock Nova Micro. Three recovery tools succeeded and one uncertain request correctly paused at the confidence gate. Source and the reusable pattern are public. Inspect [original AWS responses and environment](docs/evidence/aws/), or open `/evidence` locally to replay them without making model calls. All five temporary AWS resources were deleted and EC2/EBS cleanup verified on 19 October. The public demo and evidence viewer run on GitHub Pages without hosted inference. Builder Center publication is being finalized. See the [submission checklist](docs/submission-checklist.md).
 
 ## Start locally
 

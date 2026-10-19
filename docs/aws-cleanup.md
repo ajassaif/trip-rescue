@@ -20,6 +20,18 @@ All three scenarios passed using actual local CPU Strands Decider inference and 
 
 Before claiming a qualifying hackathon submission, complete AWS-hosted agent verification and publish the public repository, Builder Center article and video under three minutes. The source, deployment runbook, drafts and hybrid live evidence are preserved.
 
-## Later successful test — cleanup verification pending
+## Later successful test — cleanup verified 19 October 2026
 
-A later approved deployment on 18 October ran the actual models successfully. It is separate from the deleted attempts above. Its two-hour timer issued poweroff at 15:05 UTC on 18 October, closing the SSH session. The template specifies termination on instance shutdown and root-disk deletion, but those AWS states still need verification. The CloudFormation stack also needs deletion to remove the remaining IAM role/profile, security group and public key. AWS sign-in expired before that verification could be completed. No claim of account-wide cleanup or final billing reconciliation is made.
+The later approved deployment ran Decider and the agent on EC2 with real Bedrock calls on 18 October. Its timer issued poweroff at 15:05 UTC. CloudFormation deletion was requested and verified on 19 October, with deletion timestamp 04:05:43 UTC (09:35:43 IST).
+
+| Resource | Verified status |
+| --- | --- |
+| TestHost | DELETE_COMPLETE |
+| ImportedSshKey | DELETE_COMPLETE |
+| NovaMicroRole | DELETE_COMPLETE |
+| NovaMicroInstanceProfile | DELETE_COMPLETE |
+| SshOnlySecurityGroup | DELETE_COMPLETE |
+
+The exact test instance no longer appeared in EC2 inventory. Regional EBS inventory contained only the unrelated pre-existing 60 GiB volume; no Trip Rescue root disk remained. The test instance had no allocated address. Its automatically assigned IPv4 was not an Elastic IP and is released with instance termination.
+
+Scope: all resources created by this Trip Rescue temporary deployment. Unrelated infrastructure was left untouched. No account-wide zero-resource or final-billing claim is made. Actual billed cost and credit application have not been reconciled. Model inference was on demand, with no provisioned Bedrock throughput created.

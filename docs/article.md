@@ -6,7 +6,7 @@ Trip Rescue is an experimental travel recovery desk that gives **tool selection 
 
 - [Public source and setup](https://github.com/ajassaif/trip-rescue)
 - [Reusable decision recipe](https://github.com/ajassaif/trip-rescue/tree/main/patterns)
-- [Demo video](https://raw.githubusercontent.com/ajassaif/trip-rescue/main/docs/demo/trip-rescue-demo.mp4)
+- [Demo video](https://ajassaif.github.io/trip-rescue/)
 - [Original AWS run evidence](https://github.com/ajassaif/trip-rescue/tree/main/docs/evidence/aws)
 
 The 2:28 demo is a silent, captioned walkthrough of saved responses from the actual AWS runs. Its result panels are rendered from the original JSON; it does not depict new inference. The introductory app screenshot is labeled as an earlier offline-demo view.
@@ -53,7 +53,7 @@ The last result matters: the model's candidate choice was transport, but its con
 
 These four examples are **not an accuracy, calibration or latency benchmark**. Timing measures the Decider HTTP round trip inside the agent. The repository includes requests, responses, package versions and downloaded model revisions so the observations can be inspected and reproduced. The `/evidence` page clearly labels these as recorded AWS results; changing its example does not make a new model call.
 
-The temporary host had a two-hour shutdown timer. The model and agent ran on loopback, SSH was restricted to the operator's IP, and no public application endpoint was exposed. The deployment can be reproduced from the included CloudFormation template and runbook.
+The temporary host had a two-hour shutdown timer. The model and agent ran on loopback, SSH was restricted to the operator's IP, and no public application endpoint was exposed. CloudFormation cleanup was verified on 19 October: all five temporary resources were deleted, and no Trip Rescue root disk remained. The deployment can be reproduced from the included CloudFormation template and runbook.
 
 ## What I learned
 

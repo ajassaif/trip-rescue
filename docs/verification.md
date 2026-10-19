@@ -39,7 +39,6 @@ An independent source reviewer approved the local-demo scope after the numeric-v
 
 ## Not verified
 
-- Final deletion verification for the later successful AWS test deployment. Its two-hour timer shut the host down; the remaining stack resources still require authenticated cleanup. See [cleanup record](aws-cleanup.md).
 - Docker images or runtime. Docker was stopped to release memory. Compose configuration validation alone does not establish container execution success.
 - Real travel availability, route safety, fares or weather. There is no live travel-data provider.
 - A live-model quality, calibration, cost or latency comparison. The examples below are individual observations, not a benchmark or accuracy estimate.
@@ -74,3 +73,10 @@ The FastAPI agent and actual Decider checkpoint ran together on EC2 c7i.2xlarge 
 | Ambiguous | find_transport | 0.5905 | 2156.77 ms | Gate selected clarify; no tool or Bedrock call |
 
 The ambiguous result is an application abstention, not a model choice of clarify. These observations are not a quality or performance benchmark. All inventory is fictional. The subsequent `/evidence` UI renders saved responses and makes no new provider calls. Lint, TypeScript and production build passed after that page was added.
+
+## Publication and cleanup — 19 October 2026
+
+- All five temporary AWS stack resources show DELETE_COMPLETE. EC2/EBS checks confirm the test instance and root volume are gone. See [cleanup record](aws-cleanup.md).
+- Public GitHub Pages video loaded with duration 148 seconds and readyState 4. The full MP4 also decoded without errors with FFmpeg.
+- Public evidence viewer rendered all four saved scenarios correctly, including candidate find_transport versus application action clarify for the ambiguous request.
+- Anonymous MP4 download returned HTTP 200 and matched the local SHA-256. JSON line-ending normalization by Git changes byte hashes; source content is preserved.
